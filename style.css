@@ -1,0 +1,48 @@
+html{
+  height:100%;
+  width:100%;
+  background:#236;
+  background-image:url("보충수업부.png");
+  background-size:15vw;
+  animation: move_bg 5s linear infinite;
+  font-family:"경기천년체";
+  user-select:none;
+}
+
+.blind{position:fixed;opacity:0;visibility:hidden;background:#11111188;left:0;top:0;right:0;bottom:0;transition:all .3s;}
+@supports(backdrop-filter:none){
+  .blind{backdrop-filter:blur(3px);}
+}
+input[type="checkbox"]{display:none;}
+#game{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);aspect-ratio:1/1;overflow:hidden;}
+
+#canvas{position:absolute;background-image:url(bg.webp);background-position:center;background-size:cover;width:100%}
+@media(orientation:portrait){
+  #game{width:100%}
+}
+@media(orientation:landscape){
+  #game{height:100%}
+}
+@keyframes move_bg{
+  0%{background-position: 0px 0px;}
+  100%{background-position: 15vw 15vw;}
+}
+
+#set+label{position:absolute;width:100px;background:#457;left:-20px;top:8px;border-radius:5px;display:flex;align-items:center;transform:skewX(-15deg);z-index:10;}
+#set+label+div{z-index:9;}
+#set+label+div+div{position:fixed;background:#eef;width:calc(100% - 30px);height:60%;left:calc(-100%);top:80px;border-radius:5px;z-index:9;transition:.3s;padding:8px;font-size:1.5rem;box-sizing:border-box;}
+
+#set+label>svg{position:relative;transition:.3s;transform:skewX(15deg);height:50px;right:-30px;}
+#set:checked+label>svg{transform:skewX(15deg)rotate(1turn);}
+#set:checked+label+div{opacity:1;visibility:visible;}
+#set:checked+label+div+div{left:15px}
+
+.volume{display:flex;height:50px;align-items: center;}
+.volume video{width:40px;display:none;}
+
+.volume_{font-size:1rem;}
+
+#title{position:absolute;left:50%;top:20px;transform:translateX(-50%);width:70%;}
+#start{position:absolute;border:0;display:flex;background:#4598ff;border-radius:5px;left:50%;top:70%;transform:translateX(-50%)skewX(-15deg);font-size:1.5rem;width:100px;aspect-ratio:2/1;justify-content:center;align-items:center;transition:.3s;}
+#start:active{border:0;transform:translateX(-50%)skewX(-15deg)scale(.9);background:#4290ef;}
+#start span{position:absolute;transform:skewX(15deg);}

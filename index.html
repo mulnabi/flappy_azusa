@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon"type="image/ico"href="/azusa.ico">
+  <meta name="viewport" content="width=device-width">
+  <title>아즈사 파닥파닥</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src="snolr.js"></script>
+  <script>volume=0.7</script>
+<style>
+@font-face{
+  font-family:"경기천년체";
+  src:url("font/Title.woff")format("truetype");
+  font-weight:normal;
+  font-display:swap;
+}
+</style>
+</head>
+
+<body>
+  <audio id="BGM" src="sound\Hifumi Daisuki.wav" autoplay loop onloadstart="this.volume=0.2"></audio>
+  <div id="game">
+    <canvas id="canvas" width="1080" height="1080"></canvas>
+    <input type="checkbox" id="set">
+    <label for="set" tabindex="1">
+      <svg viewBox="0 0 24 24"fill="none"stroke="#fff"stroke-linejoin="round"stroke-width="1.5"><path d="m10 6 1-2h2l1 2 2.35 1.43 2.08-.3 1 1.74-1.23 1.86v2.54l1.23 1.86-1 1.74-2.23-.14L14 18l-1 2h-2l-1-2-2.2-1.27-2.23.14-1-1.74 1.23-1.86v-2.54L4.57 8.87l1-1.74 2.23.14Z"/><circle cx="12" cy="12" r="2.25" stroke-linecap="round"/></svg>
+    </label>
+    <div class="blind"></div>
+    <div>
+      캐릭터 소리<br>
+      <span class="volume">
+        <input type="range" value="70" onchange="소리.재생('테스트',Number(this.value)/100);"oninput="
+          if(volume=Number(this.value)){
+            char_volume_.style.display='inline-block'
+            char_mute.style.display='none'
+            char_volume_.innerText=this.value
+            volume=Number(this.value)/100
+          }else{
+            char_volume_.style.display='none'
+            char_mute.style.display='inline-block'
+          }
+        "><span id="char_volume_"class="volume_">70</span><video src="img/음소거.mp4"id="char_mute" loop="loop" autoplay></video>
+      </span><br>
+      BGM<br>
+      <span class="volume">
+        <input type="range" value="20"oninput="
+          BGM.volume=Number(this.value)/100
+          if(Number(this.value)){
+            BGM_volume_.style.display='inline-block'
+            BGM_mute.style.display='none'
+            BGM_volume_.innerText=this.value
+          }else{
+            BGM_volume_.style.display='none'
+            BGM_mute.style.display='inline-block'
+          }
+
+        ">
+        <span id="BGM_volume_"class="volume_">20</span><video src="img/음소거.mp4"id="BGM_mute" loop="loop" autoplay></video>
+      </span>
+    </div>
+    <div id="home">
+      <img src="title.png" id="title">
+      <button id="start"><span>시작</span></button>
+    </div>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+
+</html>
