@@ -19,7 +19,7 @@
 </head>
 
 <body>
-  <audio id="BGM" src="sound\Hifumi Daisuki.wav" autoplay loop onloadstart="this.volume=0.2"></audio>
+  <audio id="BGM" src="sound\Hifumi Daisuki.wav" onloadstart="this.volume=0.2" autoplay loop></audio>
   <div id="game">
     <canvas id="canvas" width="1080" height="1080"></canvas>
     <input type="checkbox" id="set">
@@ -40,7 +40,7 @@
             char_volume_.style.display='none'
             char_mute.style.display='inline-block'
           }
-        "><span id="char_volume_"class="volume_">70</span><video src="img/음소거.mp4"id="char_mute" loop="loop" autoplay></video>
+        "><span id="char_volume_"class="volume_">70</span><video src="img/음소거.mp4"id="char_mute" loop autoplay muted></video>
       </span><br>
       BGM<br>
       <span class="volume">
@@ -54,9 +54,9 @@
             BGM_volume_.style.display='none'
             BGM_mute.style.display='inline-block'
           }
-
+          BGM.play()
         ">
-        <span id="BGM_volume_"class="volume_">20</span><video src="img/음소거.mp4"id="BGM_mute" loop="loop" autoplay></video>
+        <span id="BGM_volume_"class="volume_">20</span><video src="img/음소거.mp4"id="BGM_mute" loop autoplay muted></video>
       </span>
     </div>
     <div id="home">

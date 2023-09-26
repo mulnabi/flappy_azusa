@@ -1,10 +1,14 @@
 let C=document.getElementById("canvas").getContext("2d"),
+hit_box_rand=0,
 azusa_img=[],
 page="home";
+
 소리.지정("sound/Azusa_Battle_Shout_2.ogg","아즈사");
 소리.지정("sound/test.ogg","테스트");
 소리.지정("sound/click.mp3","클릭");
+
 (async()=>{
+  let BGM=new AudioContext();
   for(let i=0;i<6;++i)azusa_img[i]=await IMG(`img/${i}.png`);
   
   let ENTITY_list=[]
@@ -19,24 +23,28 @@ page="home";
       this.img=img
       this.hit_rect=hit_rect
       ENTITY_list.push(this)
-      let c=document.createElement('canvas').getContext("2d",{antialias:0});
-      c.canvas.width=w;c.canvas.height=h;
-      c.drawImage(img,0,0,w,h);
-      let d=c.getImageData(0,0,w,h).data,hx=w,hy=h,hw=0,hh=0;
-      for(let y=0;y<h;++y)
-        for(let x=0;x<w*4;x+=4)
-          if(!d[x+y*w+3]){
-            hx=hx>x?x:hx
-            hy=hy>y?y:hy
-            hw=hw<x?x:hw
-            hh=hh<y?y:hh
-          }
+      if(!hit_rect){
+        let c=document.createElement('canvas').getContext("2d",{antialias:0});
+        c.canvas.width=w;c.canvas.height=h;
+        c.drawImage(img,0,0,w,h);
+        let d=c.getImageData(0,0,w,h).data,hx=w,hy=h,hw=0,hh=0;
+        for(let y=0;y<h;++y)
+          for(let x=0;x<w*4;x+=4)
+            if(d[x+y*w*4+3]){
+              hx=hx>x?x:hx
+              hy=hy>y?y:hy
+              hw=hw<x?x:hw
+              hh=hh<y?y:hh
+            }
+        this.hit_rect=[hx/4,hy,(hw-hx)/4,hh-hy]
+        console.log(this.hit_rect);
+      }
     }
     draw(hit_display=0){
       this.x+=this.ax
       this.y+=this.ay
       C.drawImage(this.img,this.x,this.y,this.w,this.h)
-      if(hit_display)C.strokeRect(this.hit[0]+this.x,this.hit[1]+this.x,this.hit[2],this.hit[3])
+      if(hit_display)C.strokeRect(this.hit_rect[0]+this.x,this.hit_rect[1]+this.y,this.hit_rect[2],this.hit_rect[3]);
     }
     hit(E){
       if(Array.isArray(E)){
@@ -56,7 +64,7 @@ page="home";
   document.addEventListener("keyup",$=>key[$.key]=0)
   getID("start").addEventListener("click",$=>{
     getID("home").style.display="none"
-    page="play"
+    page="avoid"
     azusa.ay=0;
     azusa.y=250;
     azusa.x=250
@@ -74,32 +82,10 @@ page="home";
     azusa.ay=-10
     소리.재생("아즈사",volume)
   })
-
-  games={
-    home:()=>{
-      home.style.display="block"
-      if(azusa.y>1090){
-        azusa.ay=0;
-        azusa.y=-azusa.h;
-        azusa.x=랜덤(0,1080-azusa.w)
-        Halo.x=azusa.x+70
-        Halo.y=azusa.y+10
-      }
-    },
-    play:()=>{
-      
-      
-      
-    }
-  }
   window.requestAnimationFrame(loop)
   function loop(){
     C.clearRect(0,0,1080,1080)
     games[page]()
-    if(img_i&&frame_delay(4)){
-      ++img_i
-      if(img_i>5)img_i=0
-    }
     if(key["ArrowUp"]||key[" "]){
       if(jump_cooldown){
         console.log("jump")
@@ -113,13 +99,37 @@ page="home";
     azusa.ay+=.5
     Halo.ax=(azusa.x+70-Halo.x)/2
     Halo.ay=(azusa.y+10-Halo.y)/2
-    ENTITY_list.map($=>$.draw(1));
+    ENTITY_list.map($=>$.draw(hit_box_rand));
+    if(img_i&&frame_delay(4)){
+      ++img_i
+      if(img_i>5)img_i=0
+    }
     ++fc;
     window.requestAnimationFrame(loop)
   }
   function frame_delay(n){
-    return!(fc%n)
+    return!(fc%n)&&n
   }
+
+  var games={
+    home:()=>{
+      home.style.display="block"
+      if(azusa.y>1090){
+        azusa.ay=0;
+        azusa.y=-azusa.h;
+        azusa.x=랜덤(0,1080-azusa.w)
+        Halo.x=azusa.x+70
+        Halo.y=azusa.y+10
+      }
+    },
+    avoid:()=>{
+      if(azusa.y>1090){
+        page="gameover"
+      }
+    },
+    gameover:()=>{
+    }
+  };
 })()
 async function IMG(src){
   let img=new Image;
