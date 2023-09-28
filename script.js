@@ -9,8 +9,14 @@ obstacle_img;
 소리.지정("sound/Azusa_Tactic_Defeat_1.ogg","패배1");
 소리.지정("sound/Azusa_Tactic_Defeat_2.ogg","패배2");
 
+
 (async()=>{
   let BGM=getID("BGM");
+  BGM.volume=0.2
+  BGM.play().catch(()=>{
+    autoplay.checked=1
+  })
+
   for(let i=0;i<6;++i)azusa_img[i]=await IMG(`img/${i}.png`);
   pillar_img=[
     await IMG(`img/기둥.webp`),
