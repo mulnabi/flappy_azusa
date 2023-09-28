@@ -7,7 +7,7 @@
   <title>아즈사 파닥파닥</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <script src="snolr.js"></script>
-  <script>volume=0.7</script>
+  <script>var volume=0.7,page="home";</script>
 <style>
 @font-face{
   font-family:"경기천년체";
@@ -15,11 +15,34 @@
   font-weight:normal;
   font-display:swap;
 }
+#autoplay{opacity:1;visibility:visible;}
+#autoplay>div{background:#fff;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:500px;max-width:calc(100% - 16px);aspect-ratio:16/9;z-index:10;border-radius:5px;padding:8px;font-size:1.2rem;box-sizing:border-box;line-height:1.5em;}
+#autoplay>div button{position:absolute;font-size:1.2rem;bottom:8px;}
 </style>
 </head>
 
 <body>
-  <audio id="BGM" src="sound\Hifumi Daisuki.wav" onloadstart="this.volume=0.2" autoplay loop></audio>
+  <div id="autoplay" class="blind">
+    <div>
+      <a href="https://developer.chrome.com/blog/autoplay/">오디오 자동재생 정책</a>에 따라<br>
+      배경음악 자동재생에 대하여 동의십니까?
+      <p style="color:#aaa;font-size:1rem;">(설정에서 재설정 가능)</p>
+      <audio id="BGM" src="sound\Hifumi Daisuki.wav"loop></audio>
+      <button style="background:#f43;right:120px;"onclick="
+        BGM.volume=BGMR.value=0
+        BGM_volume_.style.display='none'
+        BGM_mute.style.display='inline-block'
+        autoplay.style.display='none'
+      "><div>취소</div></button>
+      <button style="background:#4fb971;right:10px;" onclick="
+        autoplay.style.display='none'
+        BGM.volume=0.2
+        BGM.play()
+      "><div>동의</div></button>
+    </div>
+  </div>
+  
+  
   <div id="game">
     <canvas id="canvas" width="1080" height="1080"></canvas>
     <input type="checkbox" id="set">
@@ -28,7 +51,7 @@
     </label>
     <div class="blind"></div>
     <div>
-      캐릭터 소리<br>
+      <h3>캐릭터 소리</h3>
       <span class="volume">
         <input type="range" value="70" onchange="소리.재생('테스트',Number(this.value)/100);"oninput="
           if(volume=Number(this.value)){
@@ -40,9 +63,9 @@
             char_volume_.style.display='none'
             char_mute.style.display='inline-block'
           }
-        "><span id="char_volume_"class="volume_">70</span><video src="img/음소거.mp4"id="char_mute" loop autoplay muted></video>
-      </span><br>
-      BGM<br>
+        "><span id="char_volume_">70</span><video src="img/음소거.mp4"id="char_mute" loop autoplay muted></video>
+      </span>
+      <h3>BGM</h3>
       <span class="volume">
         <input type="range" value="20"oninput="
           BGM.volume=Number(this.value)/100
@@ -55,13 +78,33 @@
             BGM_mute.style.display='inline-block'
           }
           BGM.play()
-        ">
-        <span id="BGM_volume_"class="volume_">20</span><video src="img/음소거.mp4"id="BGM_mute" loop autoplay muted></video>
+        "id="BGMR">
+        <span id="BGM_volume_">20</span><video src="img/음소거.mp4"id="BGM_mute" loop autoplay muted></video>
       </span>
+      <h3>히트박스 랜더링</h3>
+      <input type="checkbox"id="hit_box_rand"><label for="hit_box_rand"><div></div></label>
     </div>
-    <div id="home">
+    <input type="radio"name="page"id="home" checked>
+    <div>
       <img src="title.png" id="title">
-      <button id="start"><span>시작</span></button>
+      <button id="start"><div>시작</div></button>
+    </div>
+    <input type="radio"name="page"id="play">
+    <div>
+      <h1 id="score_">0</h1>
+    </div>
+    <input type="radio"name="page"id="game_over">
+    <div class="blind">
+      <h1>게임오버</h1>
+      <br><h3 id="score_show"></h3><br>
+      <span>
+        <button id="re_start"><div>다시 시작</div></button>
+        <button onclick="
+          page='home'
+          BGM.src='sound/Hifumi Daisuki.wav'
+          BGM.currentTime=0;BGM.play()
+        "><div>홈으로</div></button>
+      </span>
     </div>
   </div>
   
