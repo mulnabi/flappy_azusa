@@ -5,7 +5,7 @@
   <link rel="icon"type="image/ico"href="/azusa.ico">
   <meta name="viewport" content="width=device-width">
   <title>아즈사 파닥파닥</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="style.css" rel="stylesheet" type="text/css"/>
   <script src="snolr.js"></script>
   <script>var volume=0.7,page="home";</script>
 <style>
@@ -25,9 +25,9 @@
   <div id="autoplay" class="blind">
     <div>
       <a href="https://developer.chrome.com/blog/autoplay/">오디오 자동재생 정책</a>에 따라<br>
-      배경음악 자동재생에 대하여 동의십니까?
+      배경음악 자동재생에 대하여 동의를 요청합니다.
       <p style="color:#aaa;font-size:1rem;">(설정에서 재설정 가능)</p>
-      <audio id="BGM" src="sound\Hifumi Daisuki.wav"loop></audio>
+      <audio id="BGM" src="sound\Hifumi Daisuki.ogg"loop></audio>
       <button style="background:#f43;right:120px;"onclick="
         BGM.volume=BGMR.value=0
         BGM_volume_.style.display='none'
@@ -86,7 +86,7 @@
     </div>
     <input type="radio"name="page"id="home" checked>
     <div>
-      <img src="title.png" id="title">
+      <img src="title.webp" id="title">
       <button id="start"><div>시작</div></button>
     </div>
     <input type="radio"name="page"id="play">
@@ -101,7 +101,7 @@
         <button id="re_start"><div>다시 시작</div></button>
         <button onclick="
           page='home'
-          BGM.src='sound/Hifumi Daisuki.wav'
+          BGM.src='sound/Hifumi Daisuki.ogg'
           BGM.currentTime=0;BGM.play()
         "><div>홈으로</div></button>
       </span>

@@ -5,7 +5,7 @@ html{
   height:100%;
   width:100%;
   background:#236;
-  background-image:url("보충수업부.png");
+  background-image:url("보충수업부.webp");
   background-size:15vw;
   animation: move_bg 5s linear infinite;
   font-family:"경기천년체";

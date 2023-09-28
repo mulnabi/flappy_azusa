@@ -107,7 +107,7 @@ obstacle_img;
   getID("re_start").addEventListener("click",avoid_set);
   function avoid_set(){
     console.log(4);
-    BGM.src="sound/Guruguru Usagi.wav"
+    BGM.src="sound/Guruguru Usagi.mp3"
     BGM.currentTime=0;BGM.play()
     page="avoid"
     azusa.ay=-2;
@@ -194,7 +194,7 @@ obstacle_img;
       });
       if(azusa.y>1090||azusa.y<-400||azusa.hit(pillar)){
         page="gameover"
-        BGM.src="sound/Fade Out.wav"
+        BGM.src="sound/Fade Out.ogg"
         BGM.currentTime=0;BGM.play()
         score_delay.reset()
         소리.재생("패배"+랜덤(1,2),volume)
