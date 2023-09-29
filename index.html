@@ -3,13 +3,15 @@
 <head>
   <meta charset="utf-8">
   <title>아즈사 파닥파닥</title>
-  <link rel="icon"type="image/ico"href="/azusa.ico">
+  <meta name="description"content="귀여운 아즈사가 파닥파닥 거리는 게임">
+  <meta name="keyword" content="블루아카,블루아카이브,블아,아즈사,파닥파닥,파작,플래피버드,bluearchive,BA,qmffndkzk,dkzmwk,vmffovlqjrm">
+  <link rel="icon"type="image/ico"href="azusa.ico">
   <meta name="theme-color"content="#39f">
   <meta property="og:image"content="512.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link rel="manifest"href="manifest.json">
-  <link href="style.css" rel="stylesheet" type="text/css"/>
-  <script src="snolr.js"></script>
+  <link href="style.css"rel="stylesheet"type="text/css"media="all">
+  <script src="snolr.js"async></script>
   <script>var volume=0.7,page="home";</script>
 <style>
 @font-face{
@@ -40,7 +42,6 @@
     <div>
       <a href="https://developer.chrome.com/blog/autoplay/">오디오 자동재생 정책</a>에 따라<br>
       배경음악 자동재생에 대하여 동의를 요청합니다.
-      <p style="color:#aaa;font-size:1rem;">(설정에서 재설정 가능)</p>
       <audio id="BGM" src="sound\Hifumi Daisuki.ogg"loop></audio>
       <button style="background:#f43;right:120px;"onclick="
         BGM.volume=BGMR.value=0
@@ -100,12 +101,13 @@
     </div>
     <input type="radio"name="page"id="home" checked>
     <div>
-      <img src="title.webp" id="title">
+      <img src="title.webp" id="title" alt="아즈사 파닥파닥">
       <button id="start"><div>시작</div></button>
     </div>
     <input type="radio"name="page"id="play">
     <div>
       <h1 id="score_">0</h1>
+      
     </div>
     <input type="radio"name="page"id="game_over">
     <div class="blind">
@@ -120,8 +122,11 @@
         "><div>홈으로</div></button>
       </span>
     </div>
+    <input type="radio"name="page"id="stop">
+    <div>
+
+    </div>
   </div>
-  
   <script src="script.js"></script>
 </body>
 

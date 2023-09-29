@@ -1,7 +1,8 @@
 let C=getID("canvas").getContext("2d"),
 hit_box_rand=getID("hit_box_rand"),
 azusa_img=[],
-obstacle_img;
+pillar_img,
+lapisLazuli_img;
 
 소리.지정("sound/Azusa_Battle_Shout_2.ogg","아즈사");
 소리.지정("sound/test.ogg","테스트");
@@ -21,7 +22,8 @@ obstacle_img;
   pillar_img=[
     await IMG(`img/기둥.webp`),
     await IMG(`img/기둥1.webp`)
-  ]
+  ];
+  lapisLazuli_img=await IMG('img/청휘석.webp')
   
   let ENTITY_list=[]
   class ENTITY{
@@ -51,7 +53,6 @@ obstacle_img;
               hh=hh<y?y:hh
             }
         this.hit_rect=[hx/4,hy,(hw-hx)/4,hh-hy]
-        console.log(this.hit_rect);
       }
     }
     draw(hit_display=0){
@@ -78,8 +79,19 @@ obstacle_img;
         return ax<=bx+E.hit_rect[2]&&ax+this.hit_rect[2]>=bx&&ay<=by+E.hit_rect[3]&&ay+this.hit_rect[3]>=by
       }
     }
+    hit_entity(E){
+      let r=[];
+      E.map($=>{
+        let ax=this.hit_rect[0]+this.x,ay=this.hit_rect[1]+this.y,
+        bx=$.hit_rect[0]+$.x,by=$.hit_rect[1]+$.y;
+        if(ax<=bx+$.hit_rect[2]
+        &&ax+this.hit_rect[2]>=bx
+        &&ay<=by+$.hit_rect[3]
+        &&ay+this.hit_rect[3]>=by)r.push($)
+      })
+      return r;
+    }
     del(){
-      console.log("dd");
       ENTITY_list.splice(ENTITY_list.indexOf(this),1)
     }
   }
@@ -123,6 +135,9 @@ obstacle_img;
     Halo.y=azusa.y+10
     pillar.map($=>$.del());
     pillar=[]
+    lapisLazuli.map($=>$.del());
+    lapisLazuli=[]
+    count=1
     score=0
   }
   
@@ -150,7 +165,6 @@ obstacle_img;
       }
       if(key["ArrowUp"]||key[" "]){
         if(jump_cooldown&&!game_over.checked){
-          console.log("jump")
           img_i=1
           afps.fc=0
           azusa.ay=-10
@@ -168,7 +182,7 @@ obstacle_img;
     window.requestAnimationFrame(loop)
   }
   
-  var score=0,pillar=[],pillar_spawn_deley=new FRAME_DELAY,score_delay=new FRAME_DELAY,dl=0;
+  var score=0,pillar=[],lapisLazuli=[],count=1,pillar_spawn_deley=new FRAME_DELAY,score_delay=new FRAME_DELAY,dl=0;
   games={
     home:()=>{
       home.checked=1
@@ -183,18 +197,28 @@ obstacle_img;
     avoid:()=>{
       Qsel("#set+label").style.display="none"
       play.checked=1
-      if(pillar_spawn_deley.gap(200-dl)){
-        let yhight=랜덤(100,1070-400),lv=(score/50>5?5:score/50);
-        pillar.push(new ENTITY(pillar_img[1],1080,yhight-1080,200,1080,-3-lv,0,[2,0,190,1050]))
-        pillar.push(new ENTITY(pillar_img[0],1080,yhight+300,200,1080,-3-lv,0,[2,20,200,1060]))
-
+      if(pillar_spawn_deley.gap((200-dl)/2|0)){
+        let yhight=랜덤(50,1060-400),lv=(score/50>10?20:score/50);
+        dl=lv*8|0
+        pillar_spawn_deley.reset()
+        if(count&1){
+          pillar.push(new ENTITY(pillar_img[1],1080,yhight-1080,200,1080,-3-lv,0,[2,0,190,1050]))
+          pillar.push(new ENTITY(pillar_img[0],1080,yhight+400-lv*12,200,1080,-3-lv,0,[2,20,200,1060]))
+        }else lapisLazuli.push(new ENTITY(lapisLazuli_img,1080+100-30,랜덤(50,900),60,80,-3-lv,0,[0,0,60,80]))
+        ++count;
       }
-      if(pillar_spawn_deley.gap(50))score_.innerText=(++score);
+      let item=azusa.hit_entity(lapisLazuli);
+      if(score_delay.gap(20))score_.innerText=(++score);
+      if(item.length)score_.innerText=(score+=5);
+      for(let i=0;i<item.length;++i){
+        item[i].del()
+        lapisLazuli.splice(i,1)
+      }
+
       pillar=pillar.filter($=>{
         if($.x>-250){
           return $;
         }else{
-          console.log($);
           $?.del()
         }
       });
@@ -207,6 +231,7 @@ obstacle_img;
       }
     },
     gameover:()=>{
+      dl=0
       if(!score_delay.start_after(50))score_show.innerText=랜덤(100,999)+"점"
       else score_show.innerText=score+"점"
       game_over.checked=1

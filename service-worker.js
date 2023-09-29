@@ -18,6 +18,7 @@ FILE=[
   'img/기둥.webp',
   'img/기둥1.webp',
   'img/헤일로.webp',
+  'img/청휘석.webp',
   'img/음소거.mp4',
   'sound/Azusa_Battle_Shout_2.ogg',
   'sound/Azusa_Tactic_Defeat_1.ogg',
