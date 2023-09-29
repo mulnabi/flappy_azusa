@@ -191,7 +191,7 @@ obstacle_img;
       }
       if(pillar_spawn_deley.gap(50))score_.innerText=(++score);
       pillar=pillar.filter($=>{
-        if($.x>-100){
+        if($.x>-250){
           return $;
         }else{
           console.log($);
