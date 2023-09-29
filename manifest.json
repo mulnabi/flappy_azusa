@@ -2,10 +2,10 @@
   "name":"flappy azusa",
   "short_name":"참새아즈사",
   "icons": [
-    {"src":"/192.webp","type":"image/webp","sizes":"192x192"},
-    {"src":"/512.webp","type":"image/webp","sizes":"512x512","purpose":"monochrome"}
+    {"src":"/192.webp","type":"image/webp","sizes":"192x192","purpose":"any maskable"},
+    {"src":"/512.png","type":"image/png","sizes":"512x512","purpose":"monochrome"}
   ],
-  "start_url":"/index.html",
+  "start_url":"index.html",
   "display":"fullscreen",
   "theme_color":"#39f",
   "background_color":"#fff"
