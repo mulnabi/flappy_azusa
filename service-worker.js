@@ -9,17 +9,16 @@ FILE=[
   '192.webp',
   'manifest.json',
   'font/Title.woff',
-  'img/0.png',
-  'img/1.png',
-  'img/2.png',
-  'img/3.png',
-  'img/4.png',
-  'img/5.png',
+  'img/0.webp',
+  'img/1.webp',
+  'img/2.webp',
+  'img/3.webp',
+  'img/4.webp',
+  'img/5.webp',
   'img/기둥.webp',
   'img/기둥1.webp',
   'img/헤일로.webp',
   'img/음소거.mp4',
-  'img/기둥.webp',
   'sound/Azusa_Battle_Shout_2.ogg',
   'sound/Azusa_Tactic_Defeat_1.ogg',
   'sound/Azusa_Tactic_Defeat_2.ogg',
@@ -30,7 +29,7 @@ FILE=[
   'sound/Guruguru Usagi.mp3',
   '보충수업부.webp',
   'bg.webp',
-  'title.webp'
+  'title.webp',
 ];
 self.addEventListener('install',$=>{
   self.skipWaiting();

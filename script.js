@@ -17,7 +17,7 @@ obstacle_img;
     autoplay.checked=1
   })
 
-  for(let i=0;i<6;++i)azusa_img[i]=await IMG(`img/${i}.png`);
+  for(let i=0;i<6;++i)azusa_img[i]=await IMG(`img/${i}.webp`);
   pillar_img=[
     await IMG(`img/기둥.webp`),
     await IMG(`img/기둥1.webp`)
