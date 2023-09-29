@@ -12,7 +12,7 @@ lapisLazuli_img;
 
 
 (async()=>{
-  let BGM=getID("BGM");
+  let BGM=getID("BGM"),stop=getID("stop");
   BGM.volume=0.2
   BGM.play().catch(()=>{
     autoplay.checked=1
@@ -119,14 +119,21 @@ lapisLazuli_img;
   Halo=new ENTITY(await IMG("img/헤일로.webp"),50,0,90,90),
   azusa=new ENTITY(azusa_img[0],50,0,250,250),afps=new FRAME_DELAY,
   img_i=0;
-  document.addEventListener("keydown",$=>key[$.key]=1);
+  document.addEventListener("keydown",$=>{
+    if((play.checked||stop.checked)&&!key["Escape"]&&$.key=="Escape"){
+      stop.checked=!stop.checked;
+      Qsel('#set+label').style.display=''
+    }
+    key[$.key]=1
+  });
   document.addEventListener("keyup",$=>key[$.key]=0)
   getID("start").addEventListener("click",avoid_set);
   getID("re_start").addEventListener("click",avoid_set);
+  getID("re_start2").addEventListener("click",avoid_set);
   function avoid_set(){
-    console.log(4);
     BGM.src="sound/Guruguru Usagi.mp3"
     BGM.currentTime=0;BGM.play()
+    play.checked=1
     page="avoid"
     azusa.ay=-2;
     azusa.y=250;
@@ -142,20 +149,18 @@ lapisLazuli_img;
   }
   
   document.addEventListener("pointerdown",$=>{
-    소리.재생("클릭")
-  })
-  C.canvas.addEventListener("pointerdown",$=>{
-    if(!game_over.checked){
+    소리.재생("클릭");
+    console.log($.target==document.body);
+    if(!game_over.checked&&$.target==document.body||$.target==C.canvas){
       img_i=1
       afps.fc=0
       azusa.ay=-10
       소리.재생("아즈사",volume)
     }
-    
   })
   window.requestAnimationFrame(loop)
   function loop(){
-    if(!set.checked){
+    if(!set.checked&&!stop.checked){
       Qsel("#set+label").style.display=""
       C.clearRect(0,0,1080,1080)
       games[page]()

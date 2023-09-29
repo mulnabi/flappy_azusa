@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+  <meta name="naver-site-verification"content="51ab1d31139e9a7fdc959e29ad144e3906112beb"/>
   <meta charset="utf-8">
   <title>아즈사 파닥파닥</title>
   <meta name="description"content="귀여운 아즈사가 파닥파닥 거리는 게임">
@@ -107,7 +108,7 @@
     <input type="radio"name="page"id="play">
     <div>
       <h1 id="score_">0</h1>
-      
+      <button onclick="Qsel('#set+label').style.display='';getID('stop').checked=1" id="pause"><svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></button>
     </div>
     <input type="radio"name="page"id="game_over">
     <div class="blind">
@@ -117,14 +118,26 @@
         <button id="re_start"><div>다시 시작</div></button>
         <button onclick="
           page='home'
+          home.checked=1
           BGM.src='sound/Hifumi Daisuki.ogg'
           BGM.currentTime=0;BGM.play()
         "><div>홈으로</div></button>
       </span>
     </div>
     <input type="radio"name="page"id="stop">
-    <div>
-
+    <div class="blind">
+      <h1>일시 정지</h1>
+      <span>
+        <button onclick="play.checked=1"><div>계속</div></button>
+        <button id="re_start2"><div>다시 시작</div></button>
+        <button onclick="
+          home.checked=1
+          page='home'
+          BGM.src='sound/Hifumi Daisuki.ogg'
+          BGM.currentTime=0;BGM.play()
+        "><div>홈으로</div></button>
+      </span>
+      
     </div>
   </div>
   <script src="script.js"></script>
