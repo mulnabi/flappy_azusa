@@ -1,4 +1,4 @@
-const NAME='b_v1.0',
+const NAME='b_v1.1',
 FILE=[
   'index.html',
   'style.css',
