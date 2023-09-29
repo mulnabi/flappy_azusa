@@ -198,7 +198,7 @@ lapisLazuli_img;
       Qsel("#set+label").style.display="none"
       play.checked=1
       if(pillar_spawn_deley.gap((200-dl)/2|0)){
-        let yhight=랜덤(50,1060-400),lv=(score/50>10?20:score/50);
+        let yhight=랜덤(50,1060-400),lv=(score/50>12?12:score/50);
         dl=lv*8|0
         pillar_spawn_deley.reset()
         if(count&1){
@@ -209,16 +209,15 @@ lapisLazuli_img;
       }
       let item=azusa.hit_entity(lapisLazuli);
       if(score_delay.gap(20))score_.innerText=(++score);
-      if(item.length)score_.innerText=(score+=5);
-      for(let i=0;i<item.length;++i){
-        item[i].del()
-        lapisLazuli.splice(i,1)
-      }
+      if(item.length)score_.innerText=(score+=7);
+      item.map($=>{
+        lapisLazuli.splice(lapisLazuli.indexOf($),1)
+        $.del()
+      })
 
       pillar=pillar.filter($=>{
-        if($.x>-250){
-          return $;
-        }else{
+        if($.x>-250)return $;
+        else{
           $?.del()
         }
       });
