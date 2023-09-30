@@ -269,4 +269,13 @@ async function IMG(src){
   return img
 }
 
+document.addEventListener("visibilitychange", () => {
+  if(document.hidden){
+    BGM.pause();
+    if(play.checked){Qsel('#set+label').style.display='';getID('stop').checked=1}
+  }else{
+    BGM.play();
+  }
+});
+
 document.addEventListener("contextmenu",$=>$.preventDefault())
