@@ -159,8 +159,7 @@ BGM.play().catch(()=>{
       소리.재생("아즈사",volume)
     }
   })
-  window.requestAnimationFrame(loop)
-  function loop(){
+  setInterval(()=>{
     if(!set.checked&&!stop.checked){
       Qsel("#set+label").style.display=""
       C.clearRect(0,0,1080,1080)
@@ -185,8 +184,7 @@ BGM.play().catch(()=>{
       ENTITY_list.map($=>$.draw(hit_box_rand.checked));
       DF_list.map($=>++$.fc)
     }
-    window.requestAnimationFrame(loop)
-  }
+  },17)
   
   var score=0,pillar=[],lapisLazuli=[],count=1,pillar_spawn_deley=new FRAME_DELAY,score_delay=new FRAME_DELAY,dl=0;
   games={
