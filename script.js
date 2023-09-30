@@ -1,4 +1,4 @@
-let C=getID("canvas").getContext("2d"),
+let C=getID("canvas").getContext("2d",{antialias:0}),
 hit_box_rand=getID("hit_box_rand"),
 azusa_img=[],
 pillar_img,

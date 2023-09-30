@@ -110,7 +110,9 @@
         <span id="BGM_volume_">20</span><video src="img/음소거.mp4"id="BGM_mute" loop autoplay muted></video>
       </span>
       <h3>히트박스 랜더링</h3>
-      <input type="checkbox"id="hit_box_rand"><label for="hit_box_rand"><div></div></label>
+      <input type="checkbox"id="hit_box_rand"class="Toggle"><label for="hit_box_rand"><div></div></label>
+      <h3>안티에일리어싱</h3>
+      <input type="checkbox"id="Anti_Aliasing"class="Toggle"oninput="C.imageSmoothingEnabled=this.checked" checked><label for="Anti_Aliasing"><div></div></label>
     </div>
     <input type="radio"name="page"id="home" checked>
     <div>
