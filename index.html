@@ -24,6 +24,14 @@
 #autoplay:checked+div{opacity:1;visibility:visible;}
 #autoplay+div>div{background:#fff;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:500px;max-width:calc(100% - 16px);aspect-ratio:16/9;z-index:10;border-radius:5px;padding:8px;font-size:1.2rem;box-sizing:border-box;line-height:1.5em;}
 #autoplay+div>div button{position:absolute;font-size:1.2rem;bottom:8px;}
+
+#loding{position:fixed;display:flex;background:#1118;left:0;top:0;right:0;bottom:0;transition:all .3s;z-index:10;justify-content:center;align-items:center;flex-direction:column;color:#fff;}
+#loding img{animation: rotate_image 1s linear infinite;transform-origin:54% 48%;height:10rem;}
+@keyframes rotate_image{
+    100%{
+        transform: rotate(1turn);
+    }
+}
 </style>
 <script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js')
   .then(reg=>{
@@ -38,6 +46,10 @@
 </head>
 
 <body>
+  <div id="loding">
+    <img src="img/헤일로.webp"alt="로딩">
+    로딩중
+  </div>
   <input type="checkbox"id="autoplay">
   <div class="blind">
     <div>
@@ -50,7 +62,7 @@
         BGM_mute.style.display='inline-block'
         autoplay.checked=0
       "><div>취소</div></button>
-      <button style="background:#4fb971;right:10px;" onclick="
+      <button style="background:#4fb971;right:20px;" onclick="
         autoplay.checked=0
         BGM.volume=0.2
         BGM.play()
@@ -113,7 +125,8 @@
     <input type="radio"name="page"id="game_over">
     <div class="blind">
       <h1>게임오버</h1>
-      <br><h3 id="score_show"></h3><br>
+      <br><h3 id="score_show"></h3>
+      <span id="maxscore_show"></span><br>
       <span>
         <button id="re_start"><div>다시 시작</div></button>
         <button onclick="

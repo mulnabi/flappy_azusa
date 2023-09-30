@@ -70,6 +70,8 @@ button:active{transform:skewX(-15deg)scale(.9)!important;}
 #game_over+div,#stop+div{display:flex;align-items:center;justify-content:center;color:#e41;font-size:0;flex-direction:column;}
 #game_over+div>span button,#stop+div>span button{font-size:1.2rem;background:#fe5;margin:8px;}
 #game_over:checked+div,#stop+div{font-size:1rem;}
+#score_show{display:flex;}
+#maxscore_show{height:1rem;}
 
 input[name="page"]+div{display:none;position:fixed;opacity:0;visibility:hidden;pointer-events:none;}
 input[name="page"]:checked+div{display:block;opacity:1;visibility:visible;pointer-events:all}

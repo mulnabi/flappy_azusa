@@ -10,26 +10,25 @@ lapisLazuli_img;
 소리.지정("sound/Azusa_Tactic_Defeat_1.ogg","패배1");
 소리.지정("sound/Azusa_Tactic_Defeat_2.ogg","패배2");
 
+let BGM=getID("BGM"),stop=getID("stop");
+BGM.volume=0.2
+BGM.play().catch(()=>{
+  autoplay.checked=1
+});
 
 (async()=>{
-  let BGM=getID("BGM"),stop=getID("stop");
-  BGM.volume=0.2
-  BGM.play().catch(()=>{
-    autoplay.checked=1
-  })
-
   for(let i=0;i<6;++i)azusa_img[i]=await IMG(`img/${i}.webp`);
   pillar_img=[
     await IMG(`img/기둥.webp`),
     await IMG(`img/기둥1.webp`)
   ];
   lapisLazuli_img=await IMG('img/청휘석.webp')
-  
+  loding.style.display='none';
   let ENTITY_list=[]
   class ENTITY{
     ax=0
     ay=0
-    constructor(img,x=0,y=0,w=img.width,h=img.height,ax=0,ay=0,hit_rect=0){
+    constructor(img,x=0,y=0,w=img.width,h=img.height,ax=0,ay=0,hit_rect=0,f=()=>{}){
       this.x=x
       this.y=y
       this.w=w
@@ -38,6 +37,7 @@ lapisLazuli_img;
       this.ax=ax
       this.ay=ay
       this.hit_rect=hit_rect
+      this.f=f
       ENTITY_list.push(this)
       if(!hit_rect){
         let c=document.createElement('canvas').getContext("2d",{antialias:0});
@@ -58,6 +58,7 @@ lapisLazuli_img;
     draw(hit_display=0){
       this.x+=this.ax
       this.y+=this.ay
+      this.f(this)
       C.drawImage(this.img,this.x,this.y,this.w,this.h)
       if(hit_display)C.strokeRect(this.hit_rect[0]+this.x,this.hit_rect[1]+this.y,this.hit_rect[2],this.hit_rect[3]);
     }
@@ -203,18 +204,29 @@ lapisLazuli_img;
       Qsel("#set+label").style.display="none"
       play.checked=1
       if(pillar_spawn_deley.gap((200-dl)/2|0)){
-        let yhight=랜덤(50,1060-400),lv=(score/50>12?12:score/50);
+        let yhight=랜덤(50,1060-350),lv=(score/50>12?12:score/50);
         dl=lv*8|0
         pillar_spawn_deley.reset()
         if(count&1){
-          pillar.push(new ENTITY(pillar_img[1],1080,yhight-1080,200,1080,-3-lv,0,[2,0,190,1050]))
-          pillar.push(new ENTITY(pillar_img[0],1080,yhight+400-lv*12,200,1080,-3-lv,0,[2,20,200,1060]))
+          if(랜덤(0,10)||score<350){
+            pillar.push(new ENTITY(pillar_img[1],1080,yhight-1080,200,1080,-3-lv,0,[2,0,190,1050]))
+            pillar.push(new ENTITY(pillar_img[0],1080,yhight+400-lv*12,200,1080,-3-lv,0,[2,20,200,1060]))
+          }else{
+            let ay=랜덤(0,1)?2:-2
+            pillar.push(new ENTITY(pillar_img[1],1080,yhight-1080,200,1080,-3-lv,ay,[2,0,190,1050],$=>{
+              if($.y<-1030||$.y>-430)$.ay=-$.ay
+            }))
+            pillar.push(new ENTITY(pillar_img[0],1080,yhight+350,200,1080,-3-lv,ay,[2,20,200,1060],$=>{
+              if($.y<400||$.y>1000)$.ay=-$.ay
+            }))
+          }
+          
         }else lapisLazuli.push(new ENTITY(lapisLazuli_img,1080+100-30,랜덤(50,900),60,80,-3-lv,0,[0,0,60,80]))
         ++count;
       }
       let item=azusa.hit_entity(lapisLazuli);
       if(score_delay.gap(20))score_.innerText=(++score);
-      if(item.length)score_.innerText=(score+=7);
+      if(item.length)score_.innerText=(score+=10);
       item.map($=>{
         lapisLazuli.splice(lapisLazuli.indexOf($),1)
         $.del()
@@ -232,12 +244,19 @@ lapisLazuli_img;
         BGM.currentTime=0;BGM.play()
         score_delay.reset()
         소리.재생("패배"+랜덤(1,2),volume)
+        maxscore_show.innerText=''
       }
     },
     gameover:()=>{
       dl=0
       if(!score_delay.start_after(50))score_show.innerText=랜덤(100,999)+"점"
-      else score_show.innerText=score+"점"
+      else if(!score_delay.start_after(51)){
+        score_show.innerText=score+"점"
+        if(Number(localStorage.getItem("score"))<score)localStorage.setItem("score",score)
+      }else if(score_delay.fc==90){
+        if(Number(localStorage.getItem("score"))<=score)maxscore_show.innerText='최고점 달성!'
+        else maxscore_show.innerText=`(최고점:${localStorage.getItem("score")})`
+      }
       game_over.checked=1
     }
   };
