@@ -271,7 +271,7 @@ document.addEventListener("visibilitychange", () => {
   if(document.hidden){
     BGM.pause();
     if(play.checked){Qsel('#set+label').style.display='';getID('stop').checked=1}
-  }else{
+  }else if(BGM.currentTime){
     BGM.play();
   }
 });
