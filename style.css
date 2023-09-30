@@ -13,6 +13,7 @@ body{
   font-family:"경기천년체";
   user-select:none;
   touch-action:none;
+  overflow:hidden;
 }
 @keyframes move_bg{
   0%{background-position: 0px 0px;}
