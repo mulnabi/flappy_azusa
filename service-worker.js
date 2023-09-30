@@ -1,5 +1,6 @@
-const NAME='b_v2.5',
+const NAME='b_v2.6',
 FILE=[
+  'font/Title.woff2',
   'index.html',
   'style.css',
   'script.js',
@@ -8,7 +9,6 @@ FILE=[
   '512.png',
   '192.png',
   'manifest.json',
-  'font/Title.woff',
   'img/0.webp',
   'img/1.webp',
   'img/2.webp',

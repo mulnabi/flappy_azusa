@@ -12,12 +12,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content, user-scalable=no">
   <link rel="manifest"href="manifest.json">
   <link href="style.css"rel="stylesheet"type="text/css"media="all">
-  <script src="snolr.js"></script>
-  <script>var volume=0.7,page="home";</script>
 <style>
 @font-face{
   font-family:"경기천년체";
-  src:url("font/Title.woff")format("truetype");
+  src:url("font/Title.woff2")format("truetype");
   font-weight:normal;
   font-display:swap;
 }
@@ -33,7 +31,9 @@
     }
 }
 </style>
-<script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js')
+<script src="snolr.js"></script>
+<script>var volume=0.7,page="home";
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js')
   .then(reg=>{
     reg.onupdatefound=()=>{
       const installingWorker=reg.installing;
