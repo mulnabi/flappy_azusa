@@ -82,29 +82,16 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
       <h3>캐릭터 소리</h3>
       <span class="volume">
         <input type="range" value="70" onchange="소리.재생('테스트',Number(this.value)/100);"oninput="
-          if(volume=Number(this.value)){
-            char_volume_.style.display='inline-block'
-            char_mute.style.display='none'
-            char_volume_.innerText=this.value
-            volume=Number(this.value)/100
-          }else{
-            char_volume_.style.display='none'
-            char_mute.style.display='inline-block'
-          }
-        "><span id="char_volume_">70</span><video src="img/음소거.mp4"id="char_mute" loop autoplay muted></video>
+          cvolume_val(this.value)
+          localStorage.setItem('cv',volume)
+        "id="CVR"><span id="char_volume_">70</span><video src="img/음소거.mp4"id="char_mute" loop autoplay muted></video>
       </span>
       <h3>BGM</h3>
       <span class="volume">
-        <input type="range" value="20"oninput="
+        <input type="range"oninput="
           BGM.volume=Number(this.value)/100
-          if(Number(this.value)){
-            BGM_volume_.style.display='inline-block'
-            BGM_mute.style.display='none'
-            BGM_volume_.innerText=this.value
-          }else{
-            BGM_volume_.style.display='none'
-            BGM_mute.style.display='inline-block'
-          }
+          bgm_val(this.value)
+          localStorage.setItem('BGM',BGM.volume)
           BGM.play()
         "id="BGMR">
         <span id="BGM_volume_">20</span><video src="img/음소거.mp4"id="BGM_mute" loop autoplay muted></video>

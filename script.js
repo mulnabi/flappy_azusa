@@ -11,7 +11,34 @@ lapisLazuli_img;
 소리.지정("sound/Azusa_Tactic_Defeat_2.ogg","패배2");
 
 let BGM=getID("BGM"),stop=getID("stop");
-BGM.volume=0.2
+
+if(localStorage.getItem("cv")==null)localStorage.setItem('cv',.7)
+volume=Number(localStorage.getItem("cv"))
+cvolume_val(getID("CVR").value=volume*100|0)
+function cvolume_val($){
+  if(volume=Number($)/100){
+    char_volume_.style.display='inline-block'
+    char_mute.style.display='none'
+    char_volume_.innerText=$
+  }else{
+    char_volume_.style.display='none'
+    char_mute.style.display='inline-block'
+  }
+}
+
+if(localStorage.getItem("BGM")==null)localStorage.setItem('BGM',.2)
+BGM.volume=Number(localStorage.getItem("BGM"))
+bgm_val(getID("BGMR").value=BGM.volume*100|0)
+function bgm_val($){
+  if(Number($)){
+    BGM_volume_.style.display='inline-block'
+    BGM_mute.style.display='none'
+    BGM_volume_.innerText=$
+  }else{
+    BGM_volume_.style.display='none'
+    BGM_mute.style.display='inline-block'
+  }
+}
 BGM.play().catch(()=>{
   autoplay.checked=1
 });
@@ -186,7 +213,7 @@ BGM.play().catch(()=>{
     }
   },17)
   
-  var score=0,pillar=[],lapisLazuli=[],count=1,pillar_spawn_deley=new FRAME_DELAY,score_delay=new FRAME_DELAY,dl=0;
+  var score=0,blue_score=0,pillar=[],lapisLazuli=[],count=1,pillar_spawn_deley=new FRAME_DELAY,score_delay=new FRAME_DELAY,dl=0;
   games={
     home:()=>{
       home.checked=1
@@ -223,8 +250,8 @@ BGM.play().catch(()=>{
         ++count;
       }
       let item=azusa.hit_entity(lapisLazuli);
-      if(score_delay.gap(20))score_.innerText=(++score);
-      if(item.length)score_.innerText=(score+=10);
+      if(score_delay.gap(20))score_.innerText=(++score)+blue_score*5;
+      if(item.length)score_.innerText=(score+=10)+(++blue_score)*5;
       item.map($=>{
         lapisLazuli.splice(lapisLazuli.indexOf($),1)
         $.del()
@@ -249,8 +276,8 @@ BGM.play().catch(()=>{
       dl=0
       if(!score_delay.start_after(50))score_show.innerText=랜덤(100,999)+"점"
       else if(!score_delay.start_after(51)){
-        score_show.innerText=score+"점"
-        if(Number(localStorage.getItem("score"))<score)localStorage.setItem("score",score)
+        score_show.innerText=score+blue_score*5+"점"
+        if(Number(localStorage.getItem("score"))<score)localStorage.setItem("score",score+blue_score*5)
       }else if(score_delay.fc==90){
         if(Number(localStorage.getItem("score"))<=score)maxscore_show.innerText='최고점 달성!'
         else maxscore_show.innerText=`(최고점:${localStorage.getItem("score")})`
