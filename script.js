@@ -213,7 +213,7 @@ BGM.play().catch(()=>{
     }
   },17)
   
-  var score=0,blue_score=0,pillar=[],lapisLazuli=[],count=1,pillar_spawn_deley=new FRAME_DELAY,score_delay=new FRAME_DELAY,dl=0;
+  var score=0,blue_score=0,buf_score=0,pillar=[],lapisLazuli=[],count=1,pillar_spawn_deley=new FRAME_DELAY,score_delay=new FRAME_DELAY,dl=0;
   games={
     home:()=>{
       home.checked=1
@@ -250,8 +250,8 @@ BGM.play().catch(()=>{
         ++count;
       }
       let item=azusa.hit_entity(lapisLazuli);
-      if(score_delay.gap(20))score_.innerText=(++score)+blue_score*5;
-      if(item.length)score_.innerText=(score+=10)+(++blue_score)*5;
+      if(score_delay.gap(20))score_.innerText=(++score)+blue_score;
+      if(item.length)score_.innerText=score+(blue_score+=15);
       item.map($=>{
         lapisLazuli.splice(lapisLazuli.indexOf($),1)
         $.del()
@@ -270,17 +270,17 @@ BGM.play().catch(()=>{
         score_delay.reset()
         소리.재생("패배"+랜덤(1,2),volume)
         maxscore_show.innerText=''
+        buf_score=Number(localStorage.getItem("score"))
       }
     },
     gameover:()=>{
-      dl=0
       if(!score_delay.start_after(50))score_show.innerText=랜덤(100,999)+"점"
       else if(!score_delay.start_after(51)){
-        score_show.innerText=score+blue_score*5+"점"
-        if(Number(localStorage.getItem("score"))<score)localStorage.setItem("score",score+blue_score*5)
+        score_show.innerText=score+blue_score+"점"
+        if(buf_score<score)localStorage.setItem("score",score+blue_score)
       }else if(score_delay.fc==90){
-        if(Number(localStorage.getItem("score"))<=score)maxscore_show.innerText='최고점 달성!'
-        else maxscore_show.innerText=`(최고점:${localStorage.getItem("score")})`
+        if(buf_score<score)maxscore_show.innerText='최고점 달성!'
+        else maxscore_show.innerText=`(최고점:${buf_score})`
       }
       game_over.checked=1
     }

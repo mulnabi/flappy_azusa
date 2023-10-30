@@ -64,8 +64,8 @@ button:active{transform:skewX(-15deg)scale(.9)!important;}
 
 #play+div{position:fixed;left:0;top:0;width:100%;}
 #score_{position:absolute;left:20px;top:10px;}
-#pause{position:absolute;right:20px;top:20px;}
-#pause{padding:4px 6px}
+#pause{position:absolute;right:20px;top:20px;padding:4px 6px}
+#pause div{display:flex;}
 #pause div>svg{height:1.4rem;}
 
 #game_over+div,#stop+div{display:flex;align-items:center;justify-content:center;color:#e41;font-size:0;flex-direction:column;}

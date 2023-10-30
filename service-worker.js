@@ -1,4 +1,4 @@
-const NAME='b_v2.7',
+const NAME='b_v2.8',
 FILE=[
   'font/Title.woff2',
   'index.html',
