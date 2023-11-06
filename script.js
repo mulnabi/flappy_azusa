@@ -174,6 +174,7 @@ BGM.play().catch(()=>{
     lapisLazuli=[]
     count=1
     score=0
+    blue_score=0
   }
   
   document.addEventListener("pointerdown",$=>{
