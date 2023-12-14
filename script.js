@@ -174,7 +174,7 @@ BGM.play().catch(()=>{
     lapisLazuli=[]
     count=1
     score=0
-    blue_score=0
+    lv=0
   }
   
   document.addEventListener("pointerdown",$=>{
@@ -214,7 +214,7 @@ BGM.play().catch(()=>{
     }
   },17)
   
-  var score=0,blue_score=0,buf_score=0,pillar=[],lapisLazuli=[],count=1,pillar_spawn_deley=new FRAME_DELAY,score_delay=new FRAME_DELAY,dl=0;
+  var score=0,lv=0,buf_score=0,pillar=[],lapisLazuli=[],count=1,pillar_spawn_deley=new FRAME_DELAY,score_delay=new FRAME_DELAY,dl=0;
   games={
     home:()=>{
       home.checked=1
@@ -230,29 +230,32 @@ BGM.play().catch(()=>{
       Qsel("#set+label").style.display="none"
       play.checked=1
       if(pillar_spawn_deley.gap((200-dl)/2|0)){
-        let yhight=랜덤(50,1060-350),lv=(score/50>12?12:score/50);
-        dl=lv*8|0
+        let yhight=랜덤(50,1060-350),level=(lv/50>12?12:lv/50);
+        dl=level*8|0
         pillar_spawn_deley.reset()
         if(count&1){
-          if(랜덤(0,10)||score<350){
-            pillar.push(new ENTITY(pillar_img[1],1080,yhight-1080,200,1080,-3-lv,0,[2,0,190,1050]))
-            pillar.push(new ENTITY(pillar_img[0],1080,yhight+400-lv*12,200,1080,-3-lv,0,[2,20,200,1060]))
+          if(랜덤(0,10)||lv<350){
+            pillar.push(new ENTITY(pillar_img[1],1080,yhight-1080,200,1080,-3-level,0,[2,0,190,1050]))
+            pillar.push(new ENTITY(pillar_img[0],1080,yhight+400-level*12,200,1080,-3-level,0,[2,20,200,1060]))
           }else{
             let ay=랜덤(0,1)?2:-2
-            pillar.push(new ENTITY(pillar_img[1],1080,yhight-1080,200,1080,-3-lv,ay,[2,0,190,1050],$=>{
+            pillar.push(new ENTITY(pillar_img[1],1080,yhight-1080,200,1080,-3-level,ay,[2,0,190,1050],$=>{
               if($.y<-1030||$.y>-430)$.ay=-$.ay
             }))
-            pillar.push(new ENTITY(pillar_img[0],1080,yhight+350,200,1080,-3-lv,ay,[2,20,200,1060],$=>{
+            pillar.push(new ENTITY(pillar_img[0],1080,yhight+350,200,1080,-3-level,ay,[2,20,200,1060],$=>{
               if($.y<400||$.y>1000)$.ay=-$.ay
             }))
           }
           
-        }else lapisLazuli.push(new ENTITY(lapisLazuli_img,1080+100-30,랜덤(50,900),60,80,-3-lv,0,[0,0,60,80]))
+        }else lapisLazuli.push(new ENTITY(lapisLazuli_img,1080+100-30,랜덤(50,900),60,80,-3-level,0,[0,0,60,80]))
         ++count;
       }
       let item=azusa.hit_entity(lapisLazuli);
-      if(score_delay.gap(20))score_.innerText=(++score)+blue_score;
-      if(item.length)score_.innerText=score+(blue_score+=15);
+      if(score_delay.gap(20)){
+        score_.innerText=++score;
+        if(lv<=700)++lv;
+      }
+      if(item.length)score_.innerText=(score+=15);
       item.map($=>{
         lapisLazuli.splice(lapisLazuli.indexOf($),1)
         $.del()
@@ -277,8 +280,8 @@ BGM.play().catch(()=>{
     gameover:()=>{
       if(!score_delay.start_after(50))score_show.innerText=랜덤(100,999)+"점"
       else if(!score_delay.start_after(51)){
-        score_show.innerText=score+blue_score+"점"
-        if(buf_score<score)localStorage.setItem("score",score+blue_score)
+        score_show.innerText=score+"점"
+        if(buf_score<score)localStorage.setItem("score",score)
       }else if(score_delay.fc==90){
         if(buf_score<score)maxscore_show.innerText='최고점 달성!'
         else maxscore_show.innerText=`(최고점:${buf_score})`
