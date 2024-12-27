@@ -8,7 +8,7 @@ body{
   height:100%;width:100%;
   background:#236;
   background-image:url("보충수업부.webp");
-  background-size:15vw;
+  background-size:20vw;
   animation: move_bg 5s linear infinite;
   font-family:"경기천년체";
   user-select:none;
@@ -17,7 +17,7 @@ body{
 }
 @keyframes move_bg{
   0%{background-position: 0px 0px;}
-  100%{background-position: 15vw 15vw;}
+  100%{background-position: 20vw 20vw;}
 }
 .blind{position:fixed;opacity:0;visibility:hidden;background:#11111188;left:0;top:0;right:0;bottom:0;transition:all .3s;z-index:1;}
 @supports(backdrop-filter:none){

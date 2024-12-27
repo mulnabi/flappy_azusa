@@ -298,7 +298,7 @@ async function IMG(src){
   return img
 }
 
-document.addEventListener("visibilitychange", () => {
+document.addEventListener("visibilitychange",()=>{
   if(document.hidden){
     BGM.pause();
     if(play.checked){Qsel('#set+label').style.display='';getID('stop').checked=1}
